@@ -33,8 +33,12 @@ Some Haskell libraries call out to native libraries.  I believe the only one we'
 ```sudo apt install ghc cabal-install git curl zlib1g-devel```
 
 ### Installation on MacOS
+* Try https://www.haskell.org/platform/
+* I haven't confirmed this on a Mac yet.
 
 ### Installation on Windows
+* Try https://www.haskell.org/platform/
+* Otherwise if you're running Windows 10, you can install Ubuntu as an app and then the Ubuntu instructions above will work.
 
 ### Sanity Check
 
