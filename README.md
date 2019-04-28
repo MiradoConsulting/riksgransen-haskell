@@ -1,4 +1,4 @@
-# riksgransen-haskell
+# Riksgränsen Haskell
 
 ## Part 1 (for developers & non-developers)
 
@@ -40,6 +40,23 @@ Some Haskell libraries call out to native libraries.  I believe the only one we'
 ### Sanity Check
 
 There is a sample `starter` project included in this repo to make sure your toolchain is all working.
+
+Sync your packages:
+```
+~$ cabal update
+```
+
+Wrap the starter project in a sandbox (dependencies will be installed inside the project, rather than polluting `~/.ghc` `~/.cabal`)
+```
+~$ cd riksgransen-haskell/starter
+~/riksgransen-haskell/starter$ cabal sandbox init
+```
+
+Download/build the dependencies:
+```
+~/riksgransen-haskell/starter$ cabal install --dependencies-only 
+```
+
 
 
 
