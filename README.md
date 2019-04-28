@@ -32,3 +32,15 @@ Some Haskell libraries call out to native libraries.  I believe the only one we'
 
 ### Installation on debian/ubuntu-like OSes
 ```sudo apt install ghc cabal-install git curl silversearcher-ag zlib1g-devel```
+
+### Installation on MacOS
+
+### Installation on Windows
+
+### Sanity Check
+
+There is a sample `starter` project included in this repo to make sure your toolchain is all working.
+
+
+
+
