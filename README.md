@@ -28,10 +28,9 @@ Some Haskell libraries call out to native libraries.  I believe the only one we'
 #### Other utilities which may be useful
 * `git`
 * `curl`
-* `silversearcher-ag` (fantastic search tool)
 
 ### Installation on debian/ubuntu-like OSes
-```sudo apt install ghc cabal-install git curl silversearcher-ag zlib1g-devel```
+```sudo apt install ghc cabal-install git curl zlib1g-devel```
 
 ### Installation on MacOS
 
