@@ -57,6 +57,15 @@ Download/build the dependencies:
 ~/riksgransen-haskell/starter$ cabal install --dependencies-only 
 ```
 
+Build/run the `starter` project:
+```
+~/riksgransen-haskell/starter$ cabal run
+```
+
+You should now be able to curl/visit http://127.0.0.1:3000/ and see
+```Hello, world!```
+
+
 
 
 
