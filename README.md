@@ -52,6 +52,7 @@ Wrap the starter project in a sandbox (dependencies will be installed inside the
 ```
 
 Download/build the dependencies:
+(I've deliberately included way more dependencies than necessary, in case we want to try different things out)
 ```
 ~/riksgransen-haskell/starter$ cabal install --dependencies-only 
 ```
