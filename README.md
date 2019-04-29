@@ -10,7 +10,7 @@ You can stop reading here.
 
 The second part will be more developer-focussed and will require you to install some things.
 
-### Checklist of things to have:
+### Checklist of things to have (installation instructions further below):
 #### Compiler
 `ghc` should be installed and in your $PATH
 
