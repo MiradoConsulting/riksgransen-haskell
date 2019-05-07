@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <nav id="nav"></nav>
+            <main>
+                <h1>Haskell Crapcademy</h1>
+
+                <div>
+                  <p>Sometimes you want to pass some state along in a function.  It can be convenient to use an extra variable, sometimes called an <em>accumulator</em>, to do so.</p.>
+                  <p>Here's an example calculating list length using an <em>accumulator</em>:</p.>
+                  <pre>listLength :: Int -> [a] -> Int
+listLength acc     [] = acc
+listLength acc (x:xs) = listLength (acc+1) xs</pre>
+It's can be nice to hide the function with the extra parameter as a helper function underneath a top-level function.  Here is that:
+<pre>listLength :: [a] -> Int
+listLength xs = go 0 xs
+    where
+    go acc     [] = acc
+    go acc (x:xs) = go (acc+1) xs</pre>
+                <p>This way you get to use an accumulator but still expose a one-parameter function to your caller.</p>
+                <hr/>
+                <p>Exercise: <b>Please write a function (or two) to find the maximum of a list of Ints</b><p>
+                <p>Its type signature is:</p>
+<pre>findMax :: [Int] -> Maybe Int</pre>
+                <textarea id="findMax_q"
+                          cols="50"
+                          rows="4"
+                          onblur="submit('findMax', 'findMax_q', 'findMax_a', 'findMax_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="findMax_a"></div>
+                <hint id="findMax_h"></hint>
+                <br/>
+                </div>
+            </main>
+        </div>
+        <script type="text/javascript" src="common.js"></script>
+        <script type="text/javascript" src="problems.js"></script>
+    </body>
+</html>

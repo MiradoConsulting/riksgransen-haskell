@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <nav id="nav"></nav>
+            <main>
+                <h1>Haskell Crapcademy</h1>
+
+                <h3>Type classes</h3>
+
+                <p>Type classes are a way of adding behaviour to types.</p>
+                <p>Types which can be shown as a String implement the <em>Show</em> type class,
+                whose declaration looks like:</p>
+
+<pre>class Show a where
+    show :: a -> String</pre>
+
+                <p>If you wanted to make <em>Bool</em> showable, your implementation might look like:</p>
+
+<pre>instance Show Bool where
+    show True  = "True"
+    show False = "False"</pre>
+
+                <h3>Derivable Type classes</h3>
+
+                <p>Many type classes can be derived automatically, for instance <em>Eq</em> (the equality typeclass.)<p>
+
+                <p>Here's a type which derives <em>Show</em> and <em>Eq</em> automatically:</p> 
+
+<pre>data Direction = Up | Down
+         deriving (Show, Eq)</pre>
+
+                <hr/>
+
+                <p><b>Please define a data type <em>Colour</em> which is <em>Red</em>, <em>Green</em> or <em>Blue</em>.</b></p>
+                <p><b>Then give it a <em>Show</em> implementation (either manually or using <em>derive</em>)</b></p>
+                <textarea id="showColour_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('showColour', 'showColour_q', 'showColour_a', 'showColour_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="showColour_a"></div>
+                <hint id="showColour_h"></hint>
+                <br/>
+                <hr/>
+
+            </main>
+        </div>
+        <script type="text/javascript" src="common.js"></script>
+        <script type="text/javascript" src="problems.js"></script>
+    </body>
+</html>

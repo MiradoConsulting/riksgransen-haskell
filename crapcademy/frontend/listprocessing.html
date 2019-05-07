@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <nav id="nav"></nav>
+            <main>
+                <h1>Haskell Crapcademy</h1>
+
+                <div>
+                  <p><b>Please write a function listLength to check the size of a list.</b></p>
+                  <p>A list can either be
+                  <ul>
+                    <li><b>[]</b> the empty list</li>
+                    <li><b>(x:xs)</b> a first element 'x' and the rest 'xs'</li>
+                  </ul></p>
+                </div>
+                <textarea id="listLength_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('listLength', 'listLength_q', 'listLength_a', 'listLength_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="listLength_a"></div>
+                <hint id="listLength_h"></hint>
+                <br/>
+            </main>
+        </div>
+        <script type="text/javascript" src="common.js"></script>
+        <script type="text/javascript" src="problems.js"></script>
+    </body>
+</html>

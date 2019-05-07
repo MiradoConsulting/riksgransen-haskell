@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <nav id="nav"></nav>
+            <main>
+                <h1>Haskell Crapcademy</h1>
+
+                <div>
+                  <p>Functions are usually written with a type signature and an implementation, e.g.:</p>
+<pre>
+bigger :: Int -> Int -> Int
+bigger x y = if x > y then x else y
+</pre>
+<p>The <b>last type on the top line is the return type</b>, the others are the inputs.</p>
+                </div>
+                <hr/>
+                <div>
+                    <p><em>Exercise</em>: <b>Please write a function <em>abs</em> which returns the absolute value of an integer.</b> You can include the type signature <pre>abs :: Int -> Int</pre> or leave it out.
+                </div>
+                <textarea id="abs_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('abs', 'abs_q', 'abs_a', 'abs_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="abs_a"></div>
+                <hint id="abs_h"></hint>
+                <br/>
+            </main>
+        </div>
+        <script type="text/javascript" src="common.js"></script>
+        <script type="text/javascript" src="problems.js"></script>
+    </body>
+</html>

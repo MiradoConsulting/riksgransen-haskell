@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <nav id="nav"></nav>
+            <main>
+                <h1>Haskell Crapcademy</h1>
+
+                <p><b>Enter an Int.</b></p>
+                <textarea id="int_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('enterInteger', 'int_q', 'int_a', 'int_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="int_a"></div>
+                <hint id="int_h"></hint>
+                <br/>
+                <hr/>
+
+                <p><b>Enter a String.</b></p>
+                <textarea id="string_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('enterString', 'string_q', 'string_a', 'string_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="string_a"></div>
+                <hint id="string_h"></hint>
+                <br/>
+                <hr/>
+
+                <p><em>f x = x * 3</em> is a function which multiplies a number by 3.</p>
+                <p><b>Please define a function <em>g</em> which adds 2 to a number.</b></p>
+                <textarea id="addTwo_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('addTwo', 'addTwo_q', 'addTwo_a', 'addTwo_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="addTwo_a"></div>
+                <hint id="addTwo_h"></hint>
+                <br/>
+                <hr/>
+
+                <p><em>takeSome xs = take 5 xs</em> is a function which takes the first 5 items in a list <em>xs</em>.</p>
+                <p><b>Please define a function <em>dropSome</em> which drops the first 3 items in a list.</b></p>
+                <textarea id="dropSome_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('dropSome', 'dropSome_q', 'dropSome_a', 'dropSome_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="dropSome_a"></div>
+                <hint id="dropSome_h"></hint>
+                <br/>
+                <hr/>
+            </main>
+        </div>
+        <script type="text/javascript" src="common.js"></script>
+        <script type="text/javascript" src="problems.js"></script>
+    </body>
+</html>

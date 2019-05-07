@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <nav id="nav"></nav>
+            <main>
+                <h1>Haskell Crapcademy</h1>
+                <p>If <em>data types</em> are all about grouping data together, then <em>pattern matching</em> is all about breaking it apart.
+                <p>Here's the definition of <em>Maybe</em></p>
+<pre>data Maybe a = Just a
+             | Nothing</pre>
+                <p>Here's one way of pattern matching on it (note the <em>case..of</em> keywords):</p>
+<pre>describe :: Maybe Colour -> String
+describe maybeColour =
+  case maybeColour of
+    Just colour -> "It has a colour."
+    Nothing     -> "It does not have a colour!"</pre>
+                <p>Here's another way of pattern matching on it:</p>
+<pre>describe :: Maybe Colour -> String
+describe (Just colour) = "It has a colour."
+describe       Nothing = "It does not have a colour!"</pre>
+                <p>Notice how the two possible matches correspond to the data definition at the top.</p>
+                <hr/>
+                <p><i>Exercise</i>: The Haskell integer division function has type:</p>
+                <pre>div :: Int -> Int -> Int</pre>
+                <p><b>Using div, please write a safe integer division function which guards against divide-by-0.</b> (You may want to pattern-match one of the inputs as <i>0</i> or some other <i>n</i>)</p>
+                <pre>safeDiv :: Int -> Int -> Maybe Int</pre>
+                <textarea id="safeDiv_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('safeDiv', 'safeDiv_q', 'safeDiv_a', 'safeDiv_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="safeDiv_a"></div>
+                <hint id="safeDiv_h"></hint>
+                <br/>
+                <hr/>
+
+            </main>
+        </div>
+        <script type="text/javascript" src="common.js"></script>
+        <script type="text/javascript" src="problems.js"></script>
+    </body>
+</html>

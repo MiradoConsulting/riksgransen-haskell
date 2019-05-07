@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <nav id="nav"></nav>
+            <main>
+                <h1>Haskell Crapcademy</h1>
+
+                The definition of a Haskell boolean is:<pre>
+data Bool = True
+          | False
+</pre>
+                <p><b>Please define a data type <em>Colour</em> which is <em>Red</em> or <em>Blue</em></b></p>
+                <textarea id="defineColour_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('defineColour', 'defineColour_q', 'defineColour_a', 'defineColour_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="defineColour_a"></div>
+                <hint id="defineColour_h"></hint>
+                <br/>
+                <hr/>
+
+                A coordinate might be defined as:
+                <pre>data Coord2d = Coord2d Int Int</pre>
+                <p><b>Please define a data type <em>Coord</em> which is a <em>Coord2d</em> or a <em>Coord3d</em></b></p>
+                <textarea id="defineCoord_q"
+                          cols="50"
+                          rows="2"
+                          onblur="submit('defineCoord', 'defineCoord_q', 'defineCoord_a', 'defineCoord_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="defineCoord_a"></div>
+                <hint id="defineCoord_h"></hint>
+                <br/>
+                <hr/>
+
+            </main>
+        </div>
+        <script type="text/javascript" src="common.js"></script>
+        <script type="text/javascript" src="problems.js"></script>
+    </body>
+</html>

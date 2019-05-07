@@ -1,0 +1,77 @@
+html {
+  font-size: 62.5%;
+  font-family: serif;
+}
+
+body {
+  font-size: 1.8rem;
+  line-height: 1.618;
+  max-width: 46em;
+  margin: auto;
+  color: #4a4a4a;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+}
+
+main {
+  flex: 1;
+  padding: 0 20px;
+}
+
+nav {
+  background: #eee;
+  flex: 0 0 180px;
+  line-height: 1.9;
+  order: -1;
+  padding: 13px;
+}
+
+hint {
+  font-weight: bold;
+}
+
+@media (max-width: 684px) {
+  body {
+    font-size: 1.53rem;
+  }
+}
+
+@media (max-width: 382px) {
+  body {
+    font-size: 1.35rem;
+  }
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.1;
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.35em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.75em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+textarea {
+  font-family:monospace;
+  font-size: 1.8rem;
+  resize: none;
+}
