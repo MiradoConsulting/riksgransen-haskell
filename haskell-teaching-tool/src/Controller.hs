@@ -11,18 +11,18 @@ import ProblemResp                 (ProblemResp, noIdSubmitted)
 import Storage
 import Types                       (UserId (..), ProblemId (..), ProblemReq (..))
 
-import Control.Monad.IO.Class      (liftIO)
-import Data.List                   (sort)
-import Data.Monoid                 ((<>))
-import Data.Text                   (Text)
+import           Control.Monad.IO.Class      (liftIO)
+import           Data.List                   (sort)
+import           Data.Monoid                 ((<>))
+import           Data.Text                   (Text)
 import qualified Data.Text as T
-import Network.HTTP.Types.Header   (hLocation)
-import Network.Wai.Handler.Warp    (run)
-import Network.Wai.Middleware.Cors (simpleCors)
-import Servant
-import Servant.HTML.Blaze          (HTML)
-import Text.Blaze.Html5            (Html, html, (!), a, text, div, h4, li, ul)
-import Text.Blaze.Html5.Attributes (href)
+import           Network.HTTP.Types.Header   (hLocation)
+import           Network.Wai.Handler.Warp    (run)
+import           Network.Wai.Middleware.Cors (simpleCors)
+import           Servant
+import           Servant.HTML.Blaze          (HTML)
+import           Text.Blaze.Html5            (Html, html, (!), a, text, div, h4, li, ul)
+import           Text.Blaze.Html5.Attributes (href)
 
 type HaskellWorkshopApi = Get '[PlainText] Text
 

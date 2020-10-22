@@ -1,4 +1,4 @@
-# Revision history for crapcademy
+# Revision history for haskell-teaching-tool
 
 ## 0.1.0.0  -- YYYY-mm-dd
 
