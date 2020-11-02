@@ -83,7 +83,7 @@ solve (ProblemId "addTwo") pr =
                             , entry          = "g"
                             , postProgram    = Nothing
                             , mTest          = Just $ \prog i -> prog i == i + 2
-                            , _hint          = Just $ T.pack "Hint: Did you define a function called g?"
+                            , _hint          = Just "Hint: Did you define a function called g?"
                             }
 
 -- Please define a function dropSome which drops the first 3 items in a list.
@@ -95,7 +95,7 @@ solve (ProblemId "dropSome") pr =
                             , entry          = "dropSome"
                             , postProgram    = Nothing
                             , mTest          = Just $ \prog i -> prog i == drop 3 i
-                            , _hint          = Just $ T.pack "Hint: Try using the function drop"
+                            , _hint          = Just "Hint: Try using the function drop"
                             }
 
 solve (ProblemId "basic_5") pr =
@@ -106,7 +106,7 @@ solve (ProblemId "basic_5") pr =
                             , entry          = "add"
                             , postProgram    = Nothing
                             , mTest          = Just $ \prog (x, y) -> prog x y == x + y
-                            , _hint          = Just $ T.pack "Hint: Function definitions don't need , or ().  Try defining it like 'add x y = ...'"
+                            , _hint          = Just "Hint: Function definitions don't need , or ().  Try defining it like 'add x y = ...'"
                             }
 
 --TODO not yet used (add "helper functions" ?)
@@ -118,7 +118,7 @@ solve (ProblemId "intermediate_1") pr =
                             , entry          = "smallest"
                             , postProgram    = Nothing
                             , mTest          = Just $ \prog xs -> prog xs == if null xs then Nothing else Just (minimum xs)
-                            , _hint          = Just $ T.pack "Hint: Use an accumulator!"
+                            , _hint          = Just "Hint: Use an accumulator!"
                             }
 
 solve (ProblemId "defineColour") pr =
@@ -128,11 +128,11 @@ solve (ProblemId "defineColour") pr =
                             , imports        = ["Prelude"]
                             , entry          = "main"
                             , postProgram    = Just $ unlines [ "main :: IO ()            "
-                                                                , "main = do                "
-                                                                , "  let r = Red  :: Colour "
-                                                                , "  let b = Blue :: Colour "
-                                                                , "  return ()              "
-                                                                ]
+                                                              , "main = do                "
+                                                              , "  let r = Red  :: Colour "
+                                                              , "  let b = Blue :: Colour "
+                                                              , "  return ()              "
+                                                              ]
                             , mTest          = Nothing
                             , _hint          = Nothing
                             }
@@ -144,11 +144,11 @@ solve (ProblemId "defineCoord") pr =
                             , imports        = ["Prelude"]
                             , entry          = "main"
                             , postProgram    = Just $ unlines [ "main :: IO ()                    "
-                                                                , "main = do                        "
-                                                                , "  let a = Coord2d 1 2   :: Coord "
-                                                                , "  let b = Coord3d 1 2 3 :: Coord "
-                                                                , "  return ()                      "
-                                                                ]
+                                                              , "main = do                        "
+                                                              , "  let a = Coord2d 1 2   :: Coord "
+                                                              , "  let b = Coord3d 1 2 3 :: Coord "
+                                                              , "  return ()                      "
+                                                              ]
                             , mTest          = Nothing
                             , _hint          = Nothing
                             }
@@ -160,8 +160,8 @@ solve (ProblemId "showColour") pr =
                             , imports        = ["Prelude"]
                             , entry          = "main"
                             , postProgram    = Just $ unlines [ "main :: IO ()                                       "
-                                                                    , "main = mapM_ print ([Red, Green, Blue] :: [Colour]) "
-                                                                    ]
+                                                              , "main = mapM_ print ([Red, Green, Blue] :: [Colour]) "
+                                                              ]
                             , mTest          = Nothing
                             , _hint          = Nothing
                             }
@@ -176,7 +176,7 @@ solve (ProblemId "safeDiv") pr =
                             , mTest          = Just $ \prog (x, y) ->
                                                             prog x y ==
                                                             ((\d -> x `div` d) <$> mfilter (/=0) (Just y))
-                            , _hint          = Just $ T.pack "Try pattern matching against 0 or any other n"
+                            , _hint          = Just "Try pattern matching against 0 or any other n"
                             }
 
 solve (ProblemId "listLength") pr =
@@ -187,7 +187,7 @@ solve (ProblemId "listLength") pr =
                             , entry          = "listLength"
                             , postProgram    = Nothing
                             , mTest          = Just $ \prog xs -> prog xs == fromIntegral (length xs)
-                            , _hint          = Just $ T.pack "Try pattern matching against the empty list [] or a list with at least one element (x:xs)"
+                            , _hint          = Just "Try pattern matching against the empty list [] or a list with at least one element (x:xs)"
                             }
 
 solve (ProblemId "abs") pr =
@@ -209,7 +209,7 @@ solve (ProblemId "findMax") pr =
                             , entry          = "findMax"
                             , postProgram    = Nothing
                             , mTest          = Just $ \prog xs -> prog xs == if null xs then Nothing else Just $ maximum xs
-                            , _hint          = Just $ T.pack "Try pattern matching against the empty list [] or a list with at least one element (x:xs)"
+                            , _hint          = Just "Try pattern matching against the empty list [] or a list with at least one element (x:xs)"
                             }
 
 solve (ProblemId unknown) _ = do
