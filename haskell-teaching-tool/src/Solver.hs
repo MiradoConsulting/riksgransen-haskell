@@ -18,7 +18,7 @@ import           Data.Typeable                (Typeable)
 import           Language.Haskell.Interpreter
 import           System.Directory             (createDirectoryIfMissing, removeFile)
 import           System.Timeout               (timeout)
-import           Test.QuickCheck              (Arbitrary, quickCheckResult, property, output)
+import           Test.QuickCheck              (Arbitrary, Result (..), quickCheckResult, property, output)
 import           Text.Printf                  (printf)
 import           UnliftIO.Exception           (bracket)
 
@@ -283,8 +283,18 @@ runProgram (ProblemReq source) prog = do
         Right interpreted ->
           case mTest prog of
               Nothing -> pure (success, Correct)
-              Just test -> do
-                timeoutResult <- timeout (timeout_micros prog) . quickCheckResult $ property (test interpreted)
-                case timeoutResult of
-                  Just r -> pure (passedTests . T.lines . T.pack . output $ r, Correct)
-                  Nothing -> pure (failure ["Test timed out.  Did you infinite loop?"], Incorrect)
+              Just test ->
+                (timeout (timeout_micros prog) . quickCheckResult $ property (test interpreted)) <&> \case
+
+                    Just r@Success{} -> ( passedTests . T.lines . T.pack . output $ r
+                                        , Correct
+                                        )
+
+                    Just r@Failure{} -> ( failedTests . T.lines . T.pack . output $ r
+                                        , Correct
+                                        )
+
+                    Nothing -> ( failure ["Test timed out.  Did you infinite loop?"]
+                               , Incorrect
+                               )
+

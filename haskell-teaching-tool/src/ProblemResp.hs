@@ -25,6 +25,12 @@ passedTests ms = ProblemResp { successful = True
                              , hint       = Nothing
                              }
 
+failedTests :: [Text] -> ProblemResp
+failedTests ms = ProblemResp { successful = False
+                             , msgs       = ms
+                             , hint       = Just "^ You should see example input which failed the test ^"
+                             }
+
 failure :: [Text] -> ProblemResp
 failure ms = ProblemResp { successful = False
                          , msgs       = ms
