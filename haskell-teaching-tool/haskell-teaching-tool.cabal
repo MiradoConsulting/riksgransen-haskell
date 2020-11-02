@@ -1,24 +1,29 @@
+cabal-version:       2.4
 name:                haskell-teaching-tool
 version:             0.1.0.0
-license:             BSD3
+license:             BSD-3-Clause
 license-file:        LICENSE
 author:              John Haynes
 maintainer:          john.andrew.haynes@gmail.com
 build-type:          Simple
 extra-source-files:  ChangeLog.md
-cabal-version:       >=1.10
 
 executable haskell-teaching-tool
   main-is:             Main.hs
   other-modules:       Controller,
+                       Cookies
                        Locking,
-                       Solvers,
-                       Storage,
+                       Page,
                        ProblemResp,
+                       Solver,
+                       Storage,
                        Types
   build-depends:       aeson,
                        async,
                        base,
+                       binary,
+                       bytestring,
+                       cookie,
                        blaze-html,
                        directory,
                        hashable,
@@ -34,6 +39,8 @@ executable haskell-teaching-tool
                        stm,
                        stm-containers,
                        text,
+                       time,
+                       unliftio,
                        uuid,
                        wai-cors,
                        warp

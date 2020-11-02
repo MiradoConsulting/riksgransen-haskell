@@ -14,6 +14,10 @@ import Servant.API.ContentTypes (MimeUnrender, mimeUnrender)
 import Servant                  (FromHttpApiData, parseUrlPiece, PlainText)
 import Web.FormUrlEncoded       (FromForm)
 
+data Correct = Correct
+             | Incorrect
+                 deriving Show
+
 newtype ProblemId = ProblemId Text deriving (Eq, Hashable, Show)
 instance FromHttpApiData ProblemId where
   parseUrlPiece txt = ProblemId <$> parseUrlPiece txt

@@ -12,11 +12,16 @@
       <nav id="nav"></nav>
       <main>
         <h1>Haskell Teaching Tool</h1>
-          <form id="login-form" class="md-form" method="post" action="/itsme">
+          <form id="login-form" class="md-form" method="post" action="/login">
             <div><label for="login">Please identify yourself:</label></div>
             <div><input type="text" id="login" name="userId"></input></div>
+            <button type="submit" form="login-form" value="Submit">Identify me!</button>
           </form>
-          <button type="submit" form="login-form" value="Submit">Identify me!</button> 
+
+          <form id="logout-form" class="md-form" method="post" action="/logout">
+            <button type="submit" form="logout-form" value="Submit">Log out</button>
+          </form>
+
       </main>
     </div>
     <script type="text/javascript" src="common.js"></script>

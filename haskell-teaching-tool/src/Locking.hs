@@ -1,14 +1,23 @@
-module Locking where
+module Locking ( Lock (..)
+               , create
+               ) where
 
 import Control.Concurrent.MVar (MVar, newEmptyMVar, putMVar, takeMVar)
 
-makeLock :: IO (MVar ())
-makeLock = newEmptyMVar
+data Lock =
+    Lock { takeLock    :: IO ()
+         , releaseLock :: IO ()
+         }
 
-takeLock :: MVar () -> IO (MVar ())
-takeLock mVar = do
-    putMVar mVar ()
-    pure mVar
+create :: IO Lock
+create = do
+    mvar <- newEmptyMVar
+    pure $ Lock { takeLock    = takeLockImpl mvar
+                , releaseLock = releaseLockImpl mvar
+                }
 
-releaseLock :: MVar () -> IO ()
-releaseLock mVar = takeMVar mVar
+takeLockImpl :: MVar () -> IO ()
+takeLockImpl mVar = putMVar mVar ()
+
+releaseLockImpl :: MVar () -> IO ()
+releaseLockImpl = takeMVar

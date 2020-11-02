@@ -1,13 +1,13 @@
 module Main where
 
-import Controller (runServers)
-import Locking    (makeLock, takeLock, releaseLock)
-import Solvers    (userSolve, warmup)
-import Storage
+import           Controller (runServers)
+import qualified Locking    (create)
+import qualified Solver     (create)
+import qualified Storage    (create)
 
 main :: IO ()
 main = do
-    warmup
-    lock <- makeLock
-    storage <- makeStorage
-    runServers storage (userSolve storage (takeLock lock) releaseLock)
+    storage <- Storage.create
+    lock    <- Locking.create
+    solver  <- Solver.create storage lock
+    runServers storage solver

@@ -3,98 +3,114 @@
              ScopedTypeVariables,
              TypeOperators #-}
 
-module Controller where
+module Controller (runServers) where
 
-import Prelude hiding (div)
-
-import ProblemResp                 (ProblemResp, noIdSubmitted)
-import Storage
-import Types                       (UserId (..), ProblemId (..), ProblemReq (..))
+import Cookies     (deleteCookie, setCookie)
+import Page        (navSection, resultsPage)
+import ProblemResp (ProblemResp)
+import Solver      (Solver (..))
+import Storage     (Storage (..))
+import Types       (ProblemId, ProblemReq, UserId (..))
 
 import           Control.Monad.IO.Class      (liftIO)
-import           Data.List                   (sort)
-import           Data.Monoid                 ((<>))
 import           Data.Text                   (Text)
-import qualified Data.Text as T
 import           Network.HTTP.Types.Header   (hLocation)
 import           Network.Wai.Handler.Warp    (run)
 import           Network.Wai.Middleware.Cors (simpleCors)
 import           Servant
 import           Servant.HTML.Blaze          (HTML)
-import           Text.Blaze.Html5            (Html, html, (!), a, text, div, h4, li, ul)
-import           Text.Blaze.Html5.Attributes (href)
+import           Text.Blaze.Html5            (Html)
+import           Text.Printf                 (printf)
 
-type HaskellWorkshopApi = Get '[PlainText] Text
+type HaskellWorkshopApi = AppApi
+                     :<|> StaticApi
 
-                     :<|> Header "Cookie" UserId :> "problem" :> QueryParam "id" ProblemId
-                                                              :> ReqBody '[PlainText] ProblemReq
-                                                              :> Post '[JSON] ProblemResp
+type AppApi =
 
-                     :<|> "itsme" :> ReqBody '[FormUrlEncoded] UserId
-                                  :> Post '[HTML] (Headers '[Header "Set-Cookie" Text] Html)
+            -- Login
+            "login" :> ReqBody '[FormUrlEncoded] UserId
+                    :> Post '[HTML] (Headers '[Header "Set-Cookie" Text] Html)
 
-                     :<|> "nav" :> Get '[HTML] Html
+            -- Logout
+            :<|> "logout" :> Post '[HTML] (Headers '[Header "Set-Cookie" Text] Html)
 
-                     :<|> "results" :> Get '[HTML] Html
+            -- Submit problem
+            :<|> Header "Cookie" UserId :> "problem"
+                                        :> QueryParam "id" ProblemId
+                                        :> ReqBody '[PlainText] ProblemReq
+                                        :> Post '[JSON] ProblemResp
 
-                     :<|> Raw --Only GET or HEAD is supported
+type StaticApi =
+
+            -- Redirect to beginner
+            Get '[HTML] Html
+
+            -- Nav section
+            :<|> "nav" :> Get '[HTML] Html
+
+            -- Results
+            :<|> "results" :> Get '[HTML] Html
+
+            -- Raw files (Only GET or HEAD is supported)
+            :<|> Raw
+
+haskellWorkshopApp :: Storage IO
+                   -> Solver
+                   -> Application
+haskellWorkshopApp storage solver =
+    simpleCors $ serve (Proxy :: Proxy HaskellWorkshopApi)
+               $ appRoutes :<|> staticRoutes
+
+    where
+    appRoutes = login
+           :<|> logout
+           :<|> submitProblem solver
+
+    staticRoutes = redirToBeginner
+              :<|> pure navSection
+              :<|> results storage
+              :<|> serveDirectoryWebApp "frontend"
+
+login :: UserId
+      -> Handler (Headers '[Header "Set-Cookie" Text] Html)
+login (UserId uid) = do
+    liftIO $ printf "User logged in: %s\n" uid
+    throwError err302 { errHeaders = [ setCookie "userId" uid
+                                     , (hLocation,  "/beginner.html")
+                                     ] }
+
+logout :: Handler (Headers '[Header "Set-Cookie" Text] Html)
+logout = throwError err302 { errHeaders = [ deleteCookie "userId"
+                                          , (hLocation, "/login.html")
+                                          ]
+                           , errBody = "Not logged in"
+                           }
+
+submitProblem :: Solver
+              -> Maybe UserId
+              -> Maybe ProblemId
+              -> ProblemReq
+              -> Handler ProblemResp
+
+submitProblem _ Nothing _ _ =
+    throwError err302 { errHeaders = [(hLocation, "/login.html")]
+                      , errBody = "Not logged in"
+                      }
+
+submitProblem _ _ Nothing _ =
+    throwError $ err400 { errBody = "No problem \"id\" supplied!" }
+
+submitProblem solver (Just uid) (Just pid) preq =
+    liftIO $ runSolver solver uid pid preq
 
 redirToBeginner :: Handler a
 redirToBeginner = throwError $ err302 { errHeaders = [(hLocation, "/beginner.html")] }
 
-redirToLogin :: Handler a
-redirToLogin = throwError $ err302 { errHeaders = [(hLocation, "/login.html")] }
-
-doLogin :: UserId -> Handler (Headers '[Header "Set-Cookie" Text] Html)
-doLogin (UserId uid) = pure
-                     . addHeader uid
-                     . html $ do
-                         div "You are now logged in."
-                         a "Back" ! href "/"
-
-solve :: (UserId -> ProblemId -> ProblemReq -> IO ProblemResp)
-      -> Maybe UserId
-      -> Maybe ProblemId
-      -> ProblemReq
-      -> Handler ProblemResp
-solve       _    Nothing                _   _ = redirToLogin
-solve       _          _          Nothing   _ = pure noIdSubmitted
-solve solvers (Just uid) (Just problemId) req = liftIO $ solvers uid problemId req
-
-navSection :: Html
-navSection = html $ do
-    h4 "Sections"
-    ul $ do
-      li $ a ! href "login.html"           $ "log in/out"
-      li $ a ! href "beginner.html"        $ "beginner"
-      li $ a ! href "functions.html"       $ "functions & type signatures"
-      li $ a ! href "datatypes.html"       $ "data types"
-      li $ a ! href "patternmatching.html" $ "pattern matching"
-      li $ a ! href "listprocessing.html"  $ "list processing"
-      li $ a ! href "accumulators.html"    $ "accumulators"
-      li $ a ! href "typeclasses.html"     $ "type classes"
-
-runServers :: Storage IO -> (UserId -> ProblemId -> ProblemReq -> IO ProblemResp) -> IO ()
-runServers storage solvers = run 8080 haskellWorkshopStatic
-
-    where
-    haskellWorkshopStatic :: Application
-    haskellWorkshopStatic = simpleCors $ serve (Proxy :: Proxy HaskellWorkshopApi) routes
-        where
-        routes = redirToBeginner
-            :<|> solve solvers
-            :<|> doLogin
-            :<|> pure navSection
-            :<|> results storage
-            :<|> serveDirectoryWebApp "frontend"
-
 results :: Storage IO -> Handler Html
-results storage = do
-    rows <- liftIO $ getSolutions storage
-    pure . html $
-        mapM_ li (map text . sort . map render $ rows)
+results storage = liftIO $ resultsPage <$> getSolutions storage
 
-    where
-    render :: (UserId, ProblemId, ProblemReq, Correct) -> Text
-    render (UserId uid, ProblemId pid, ProblemReq _, correct) =
-        pid <> " " <> uid <> ": " <> " " <> (T.pack $ show correct)
+runServers :: Storage IO
+           -> Solver
+           -> IO ()
+runServers storage solver =
+    run 8080 (haskellWorkshopApp storage solver)
