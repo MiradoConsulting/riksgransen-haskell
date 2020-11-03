@@ -10,18 +10,24 @@
             <nav id="nav"></nav>
             <main>
                 <h1>Haskell Teaching Tool</h1>
-
-                <div>
-                  <p>Functions are usually written with a type signature and an implementation, e.g.:</p>
-<pre>
-bigger :: Int -> Int -> Int
-bigger x y = if x > y then x else y
-</pre>
-<p>The <b>last type on the top line is the return type</b>, the others are the inputs.</p>
-                </div>
                 <hr/>
+                <h3>Type signatures</h3>
                 <div>
-                    <p><em>Exercise</em>: <b>Please write a function <em>abs</em> which returns the absolute value of an integer.</b> You can include the type signature <pre>abs :: Int -> Int</pre> or leave it out.
+                  <p>The first line of a function is usually its <em>type signature</em>.  All other lines are the implementation:</p>
+                      
+<code>    bigger :: Int -> Int -> Int
+    bigger x y = if x > y then x else y
+</code>
+                    <p>In a type signature, the <em>last element is the return type</em>, all other elements are inputs.
+                        So <em>bigger</em> is a function which accepts two Ints and returns an Int.</p>
+
+                    <p>Constants are just functions with no inputs, e.g:</p>
+<code>    port :: Int
+    port = 8080
+</code>
+
+                    <p><b>Exercise: </b>Please write a function <b>abs</b> which returns the absolute value of an integer.
+                        Try including its type signature too.
                 </div>
                 <textarea id="abs_q"
                           cols="50"
@@ -32,6 +38,7 @@ bigger x y = if x > y then x else y
                 <div id="abs_a"></div>
                 <hint id="abs_h"></hint>
                 <br/>
+                <hr/>
             </main>
         </div>
         <script type="text/javascript" src="common.js"></script>
