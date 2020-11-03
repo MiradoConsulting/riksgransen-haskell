@@ -10,12 +10,17 @@
             <nav id="nav"></nav>
             <main>
                 <h1>Haskell Teaching Tool</h1>
+                <hr/>
+                <h3>Data types</h3>
+                <p>The definition of a Haskell boolean is:</p>
 
-                The definition of a Haskell boolean is:<pre>
-data Bool = True
+<code>data Bool = True
           | False
-</pre>
-                <p><b>Please define a data type <em>Colour</em> which is <em>Red</em> or <em>Blue</em></b></p>
+</code>
+
+<p>Its <em>type</em> is Bool and it has two <em>constructors</em> &ndash; True and False.</p>
+
+                <p><b>Exercise: </b>Please define a data type <em>Colour</em> which is <em>Red</em> or <em>Blue</em></p>
                 <textarea id="defineColour_q"
                           cols="50"
                           rows="2"
@@ -29,7 +34,7 @@ data Bool = True
 
                 A coordinate might be defined as:
                 <pre>data Coord2d = Coord2d Int Int</pre>
-                <p><b>Please define a data type <em>Coord</em> which is a <em>Coord2d</em> or a <em>Coord3d</em></b></p>
+                <p><b>Exercise: </b>Please define a data type <em>Coord</em> which is a <em>Coord2d</em> or a <em>Coord3d</em></p>
                 <textarea id="defineCoord_q"
                           cols="50"
                           rows="2"
