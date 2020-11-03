@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <nav id="nav"></nav>
+            <main>
+                <h1>Haskell Teaching Tool</h1>
+                <hr/>
+                <h3>Records</h3>
+                <p>Data types can also be defined using <em>record syntax</em>.</p>
+
+<code>    data User = User { getName :: String
+                     , getIp   :: Ip
+                     }</code>
+
+<p>Records are just data types with built-in getters, e.g.:</p>
+<code>  makeAndPrintUser :: IO ()
+  makeAndPrintUser = do
+
+      -- Create a user
+      let user = User { getName = "John"
+                      , getIp   = Ip "192.168.0.10"
+                      }
+
+      -- Print the user's name
+      putStrLn (getName user)
+</code>
+<br/>
+<hr/>
+<p><b>Exercise: </b>Given the following:</p>
+
+                <p><em>Point</em> represents a point on the cartesian plane:</p>
+                <code>    data Point = Point { getX :: Double
+                       , getY :: Double
+                       }</code>
+                <p><b>Exercise: </b>Please write a function <em>dist :: Point -> Double</em> which returns its straight-line distance from (0, 0).</p>
+                <textarea id="distOrigin_q"
+                          cols="50"
+                          rows="2"
+                          spellcheck="false"
+                          onblur="submit('distOrigin', 'distOrigin_q', 'distOrigin_a', 'distOrigin_h');"
+                          onkeyup="auto_grow(this)"></textarea>
+                <div id="distOrigin_a"></div>
+                <hint id="distOrigin_h"></hint>
+                <br/>
+                <hr/>
+
+            </main>
+        </div>
+        <script type="text/javascript" src="common.js"></script>
+        <script type="text/javascript" src="problems.js"></script>
+    </body>
+</html>

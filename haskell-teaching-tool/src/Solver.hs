@@ -60,6 +60,10 @@ userSolve storage lock u@(UserId uid) pid@(ProblemId problemId) preq@(ProblemReq
         markSolution storage u pid preq correct
         pure problemResp
 
+data Point = Point { getX :: Double
+                   , getY :: Double
+                   }
+
 solve :: ProblemId -> ProblemReq -> IO (ProblemResp, Correct)
 
 --Please enter an int
@@ -150,6 +154,20 @@ solve (ProblemId "defineCoord") pr =
                                                               , "  return ()                      "
                                                               ]
                             , mTest          = Nothing
+                            , _hint          = Nothing
+                            }
+
+solve (ProblemId "distOrigin") pr =
+    runProgram pr $ Program { _type          = undefined :: Point -> Double
+                            , _input         = undefined :: (Double, Double)
+                            , timeout_micros = 100000
+                            , imports        = ["Prelude"]
+                            , entry          = "dist"
+                            , postProgram    = Just $ unlines [ "data Point = Point { getX :: Double "
+                                                              , "                   , getY :: Double "
+                                                              , "                   }                "
+                                                              ]
+                            , mTest          = Just $ \prog (x, y) -> prog (Point x y) == sqrt (x * x + y * y)
                             , _hint          = Nothing
                             }
 

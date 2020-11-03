@@ -22,6 +22,7 @@ navSection = html $ do
       li $ a ! href "beginner.html"        $ "beginner"
       li $ a ! href "functions.html"       $ "functions & type signatures"
       li $ a ! href "datatypes.html"       $ "data types"
+      li $ a ! href "records.html"         $ "records"
       li $ a ! href "patternmatching.html" $ "pattern matching"
       li $ a ! href "listprocessing.html"  $ "list processing"
       li $ a ! href "accumulators.html"    $ "accumulators"
