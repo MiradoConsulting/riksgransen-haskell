@@ -12,10 +12,12 @@ import Solver      (Solver (..))
 import Storage     (Storage (..))
 import Types       (ProblemId, ProblemReq, UserId (..))
 
+import           Control.Concurrent          (newEmptyMVar, putMVar, takeMVar)
+import           Control.Concurrent.Async    (Async, async)
 import           Control.Monad.IO.Class      (liftIO)
 import           Data.Text                   (Text)
 import           Network.HTTP.Types.Header   (hLocation)
-import           Network.Wai.Handler.Warp    (run)
+import           Network.Wai.Handler.Warp    (defaultSettings, runSettings, setBeforeMainLoop, setPort)
 import           Network.Wai.Middleware.Cors (simpleCors)
 import           Servant
 import           Servant.HTML.Blaze          (HTML)
@@ -98,19 +100,31 @@ submitProblem _ Nothing _ _ =
                       }
 
 submitProblem _ _ Nothing _ =
-    throwError $ err400 { errBody = "No problem \"id\" supplied!" }
+    throwError err400 { errBody = "No problem \"id\" supplied!" }
 
 submitProblem solver (Just uid) (Just pid) preq =
     liftIO $ runSolver solver uid pid preq
 
 redirToBeginner :: Handler a
-redirToBeginner = throwError $ err302 { errHeaders = [(hLocation, "/beginner.html")] }
+redirToBeginner = throwError err302 { errHeaders = [(hLocation, "/beginner.html")] }
 
 results :: Storage IO -> Handler Html
 results storage = liftIO $ resultsPage <$> getSolutions storage
 
 runServers :: Storage IO
            -> Solver
-           -> IO ()
-runServers storage solver =
-    run 8080 (haskellWorkshopApp storage solver)
+           -> Int
+           -> IO (Async ())
+runServers storage solver port = do
+
+    ready <- newEmptyMVar
+
+    let settings = setPort port
+                 . setBeforeMainLoop (putMVar ready ())
+                 $ defaultSettings
+
+    a <- async $ runSettings settings (haskellWorkshopApp storage solver)
+
+    takeMVar ready
+
+    pure a
