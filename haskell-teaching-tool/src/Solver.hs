@@ -287,7 +287,9 @@ runProgram (ProblemReq source) prog = do
 
     interpretResult <- runInterpreter $ do
                            reset
-                           set [searchPath := [tempPath]]
+                           set [ searchPath         := [tempPath] 
+                               , languageExtensions := []
+                               ]
                            loadModules [fileName]
                            setImports (moduleName:imports prog)
                            interpret (moduleName ++ '.' : entry prog) as
