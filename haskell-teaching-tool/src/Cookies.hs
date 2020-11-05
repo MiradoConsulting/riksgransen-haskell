@@ -19,17 +19,14 @@ setCookie :: Text
           -> (HeaderName, ByteString)
 setCookie k v =
 
-    let cookie = toStrict
-               . toLazyByteString
-               . renderSetCookie
-               $ defaultSetCookie { setCookieName     = encodeUtf8 k
-                                  , setCookieHttpOnly = True
-                                  , setCookieSecure   = False
-                                  , setCookieMaxAge   = Just twoDays
-                                  , setCookiePath     = Just "/"
-                                  , setCookieSameSite = Just sameSiteStrict
-                                  , setCookieValue    = encodeUtf8 v
-                                  }
+    let cookie = bake defaultSetCookie { setCookieName     = encodeUtf8 k
+                                       , setCookieHttpOnly = True
+                                       , setCookieSecure   = False
+                                       , setCookieMaxAge   = Just twoDays
+                                       , setCookiePath     = Just "/"
+                                       , setCookieSameSite = Just sameSiteStrict
+                                       , setCookieValue    = encodeUtf8 v
+                                       }
 
     in (hSetCookie, cookie)
     where
@@ -40,20 +37,22 @@ deleteCookie :: Text
              -> (HeaderName, ByteString)
 deleteCookie k =
 
-    let cookie = toStrict
-               . toLazyByteString
-               . renderSetCookie
-               $ defaultSetCookie { setCookieName     = encodeUtf8 k
-                                  , setCookieHttpOnly = True
-                                  , setCookieSecure   = False
-                                  , setCookieExpires  = Just earliestTime
-                                  , setCookiePath     = Just "/"
-                                  , setCookieSameSite = Just sameSiteStrict
-                                  , setCookieValue    = "deleted"
-                                  }
+    let cookie = bake defaultSetCookie { setCookieName     = encodeUtf8 k
+                                       , setCookieHttpOnly = True
+                                       , setCookieSecure   = False
+                                       , setCookieExpires  = Just earliestTime
+                                       , setCookiePath     = Just "/"
+                                       , setCookieSameSite = Just sameSiteStrict
+                                       , setCookieValue    = "deleted"
+                                       }
 
     in (hSetCookie, cookie)
 
     where
     earliestTime :: UTCTime
     earliestTime = UTCTime (ModifiedJulianDay 0) 0
+
+bake :: SetCookie -> ByteString
+bake = toStrict
+     . toLazyByteString
+     . renderSetCookie
