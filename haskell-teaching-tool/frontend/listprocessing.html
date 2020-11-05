@@ -10,15 +10,38 @@
             <nav id="nav"></nav>
             <main>
                 <h1>Haskell Teaching Tool</h1>
+                <hr/>
+                <h3>List processing</h3>
+                <p>Write a function listLength to check the size of a list.</p>
 
-                <div>
-                  <p><b>Please write a function listLength to check the size of a list.</b></p>
-                  <p>A list can either be
-                  <ul>
-                    <li><b>[]</b> the empty list</li>
-                    <li><b>(x:xs)</b> a first element 'x' and the rest 'xs'</li>
-                  </ul></p>
-                </div>
+                A list can either be empty <samp>[]</samp>, or one element followed by a list <samp>(x:xs)</samp>.
+
+                <p>Two possible approaches are:</p>
+
+                <ol>
+                  <li>
+                    <p>
+                      write the function on two lines:
+                      <code>    listLength     [] = ...</code>
+                      <code>    listLength (x:xs) = ...</code>
+                    </p>
+                  </li>
+
+                  <li>
+                    <p>
+                      write the function on one line:
+                      <code>    listLength xs = ...</code> using if-then-else and the functions:
+                      <code>    null :: [a] -> Bool</code>
+                      <code>    head :: [a] -> a</code>
+                      <code>    tail :: [a] -> [a]</code>
+                    </p>
+                  </li>
+                </ol>
+                
+                <br/>
+                <hr/>
+                <p><b>Exercise: </b>Implement <b>listLength</b>
+
                 <textarea id="listLength_q"
                           cols="50"
                           rows="2"
